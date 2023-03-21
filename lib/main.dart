@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizstar/screens/classe_page.dart';
+import 'package:quizstar/screens/cour.dart';
 import 'package:quizstar/screens/login_screens.dart';
 import 'package:quizstar/screens/otp_screens.dart';
 import 'package:quizstar/screens/register_screens.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.indigo,
       ),
       //home: splashscreen(),
-      home: HomeClasseScreens(),
+      home: CourScreens(),
     );
   }
 }
