@@ -30,35 +30,36 @@ class _RegisterScreensState extends State<RegisterScreens> {
     setState(() {});
   }*/
 
-  /*void _registerNow() async {
+  void _registerNow() async {
+    Navigator.pushNamed(context, '/login');
     var isvalid = _form.currentState.validate();
     if (!isvalid) {
       return;
     }
     _form.currentState.save();
-    bool isRegister = await Provider.of<PostsState>(context, listen: false)
-        .registerNow(_username, _confPassword, _regions);
-    if (isRegister == false) {
-      Navigator.of(context).pushReplacementNamed(LoginScreens.routeName);
-    } else {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text("Somthing is Wrong!Try Again"),
-            actions: [
-              RaisedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text("Ok"),
-              ),
-            ],
-          );
-        },
-      );
-    }
-  }*/
+    // bool isRegister = await Provider.of<PostsState>(context, listen: false)
+    //     .registerNow(_username, _confPassword, _regions);
+    // if (isRegister == false) {
+    //   Navigator.of(context).pushReplacementNamed(LoginScreens.routeName);
+    // } else {
+    //   showDialog(
+    //     context: context,
+    //     builder: (context) {
+    //       return AlertDialog(
+    //         title: Text("Somthing is Wrong!Try Again"),
+    //         actions: [
+    //           RaisedButton(
+    //             onPressed: () {
+    //               Navigator.of(context).pop();
+    //             },
+    //             child: Text("Ok"),
+    //           ),
+    //         ],
+    //       );
+    //     },
+    //   );
+    // }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -219,13 +220,14 @@ class _RegisterScreensState extends State<RegisterScreens> {
                     RaisedButton(
                       color: blueColor,
                       onPressed: () {
-                        //_registerNow();
+                        _registerNow();
                         print("register");
                       },
                       child: Text("Register"),
                     ),
                     FlatButton(
                       onPressed: () {
+                        Navigator.pushNamed(context, '/login');
                         /*Navigator.of(context)
                             .pushReplacementNamed(LoginScreens.routeName);*/
                       },

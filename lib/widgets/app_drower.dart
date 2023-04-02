@@ -28,7 +28,9 @@ class AddDrower extends StatelessWidget {
               height: 9,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                  Navigator.pushNamed(context, '/login/classe');
+              },
               child: ListTile(
                 title: Text('Home'),
                 leading: Icon(
@@ -39,6 +41,8 @@ class AddDrower extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
+                  Navigator.pushNamed(context, '/login/cour');
+              
                 /*Navigator.of(context)
                     .pushReplacementNamed(UserProfileScreens.routeName);*/
               },
@@ -54,7 +58,9 @@ class AddDrower extends StatelessWidget {
               height: 12,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                  Navigator.pushNamed(context, '/login/register');
+              },
               child: ListTile(
                 title: Text('Concours'),
                 leading: Icon(Icons.work_sharp, color: Colors.lightBlue),
@@ -64,14 +70,18 @@ class AddDrower extends StatelessWidget {
               height: 12,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, '/login/otp');
+              },
               child: ListTile(
                 title: Text('Nous contacter'),
                 leading: Icon(Icons.contact_phone, color: Colors.blueGrey),
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, '/login/profile');
+              },
               child: ListTile(
                 title: Text('A propos de Nous'),
                 leading: Icon(Icons.house, color: Colors.blueGrey),

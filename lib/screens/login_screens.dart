@@ -14,37 +14,38 @@ class _LoginScreensState extends State<LoginScreens> {
   //String _username;
   // String _password;
 
-  /*void _loginNow() async {
+  void _loginNow() async {
+    Navigator.pushNamed(context, '/home');
     var isValid = _form.currentState.validate();
     if (!isValid) {
       return;
     }
     _form.currentState.save();
-    bool islogin = await Provider.of<PostsState>(context, listen: false)
-        .loginNow(_username, _password);
-    print(_username);
-    print(_password);
-    if (!islogin) {
-      Navigator.of(context).pushReplacementNamed(HomeScreens.routName);
-    } else {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text("Somthing is Wrong!Try Again"),
-            actions: [
-              RaisedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text("Ok"),
-              ),
-            ],
-          );
-        },
-      );
-    }
-  }*/
+    // bool islogin = await Provider.of<PostsState>(context, listen: false)
+    //     .loginNow(_username, _password);
+    // print(_username);
+    // print(_password);
+    // if (!islogin) {
+    //   Navigator.of(context).pushReplacementNamed(HomeScreens.routName);
+    // } else {
+    //   showDialog(
+    //     context: context,
+    //     builder: (context) {
+    //       return AlertDialog(
+    //         title: Text("Somthing is Wrong!Try Again"),
+    //         actions: [
+    //           RaisedButton(
+    //             onPressed: () {
+    //               Navigator.of(context).pop();
+    //             },
+    //             child: Text("Ok"),
+    //           ),
+    //         ],
+    //       );
+    //     },
+    //   );
+    // }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +121,7 @@ class _LoginScreensState extends State<LoginScreens> {
                     RaisedButton(
                       color: blueColor,
                       onPressed: () {
-                        /* _loginNow();*/
+                        _loginNow();
                         print("pressed");
                       },
                       child: Text("Login"),
@@ -130,6 +131,7 @@ class _LoginScreensState extends State<LoginScreens> {
                       onPressed: () {
                         /*Navigator.of(context)
                             .pushReplacementNamed(RegisterScreens.routeName);*/
+                        Navigator.pushNamed(context, '/resgister');
                         print("bonjour");
                       },
                       child: Text("Register Now"),
