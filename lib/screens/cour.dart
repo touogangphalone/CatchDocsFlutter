@@ -118,7 +118,9 @@ class _CourScreensState extends State<CourScreens> {
             itemBuilder: (BuildContext ctx, int index) {
               final cours = _cours[index];
               return InkWell(
-                onTap: () {},
+                onTap: () {
+                  // Navigator.pushNamed(context, '/classe/cour');
+                },
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),

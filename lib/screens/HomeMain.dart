@@ -12,7 +12,9 @@ import 'package:responsive_builder/responsive_builder.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 import 'admin_discution.dart';
+import 'apropos.dart';
 import 'champoins_concour.dart';
+import 'change_password.dart';
 import 'forum.dart';
 import 'notification.dart';
 
@@ -258,7 +260,7 @@ class _HomeMainState extends State<HomeMain> {
         body: Column(
           children: [
             Expanded(child: _showHome ? CourScreens() : 
-            _showForum ? ForumDiscussionScreen(): 
+            _showForum ? ChangePasswordPage(): 
             _showChat ? AdminDiscussionScreen(): 
             _showResult ? ResultatConcourScreen(): 
             _showClasse ? HomeClasseScreens(): 

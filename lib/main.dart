@@ -17,28 +17,20 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "Evaluation",
       home: LoginScreens(),
-            onGenerateRoute: (settings) {
-        if (settings.name == '/home') {
-          return MaterialPageRoute(builder: (context) => HomeMain());
-        } else if (settings.name == '/home/profile') {
-          return MaterialPageRoute(builder: (context) => HomeClasseScreens());
-        } else if (settings.name == '/home/resgister') {
-          return MaterialPageRoute(builder: (context) => RegisterScreens());
-        } else if (settings.name == '/home/otp') {
-          return MaterialPageRoute(builder: (context) => OtpPage());
-        } else if (settings.name == '/home/cour') {
+      onGenerateRoute: (settings) {
+        if (settings.name == '/classe/cour') {
           return MaterialPageRoute(builder: (context) => CourScreens());
-        } else if (settings.name == '/home/classe') {
-          return MaterialPageRoute(builder: (context) => HomeClasseScreens());
-        } 
+        }
         return null;
-            
       },
       routes: {
+        '/home': (context) => HomeMain(),
         '/resgister': (context) => RegisterScreens(),
         '/otp': (context) => OtpPage(),
         '/cour': (context) => CourScreens(),
         '/classe': (context) => HomeClasseScreens(),
+        // '/classe/cour': (context) => OtpPage(),
+        
         // Ajoutez des routes pour vos autres pages ici
       },
 

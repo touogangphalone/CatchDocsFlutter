@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 class AddDrower extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    /*LocalStorage storage = LocalStorage("usertoken");
+    // LocalStorage storage = LocalStorage("usertoken");
     _logoutnow() {
-      storage.clear();
-      Navigator.of(context).pushReplacementNamed(LoginScreens.routeName);
-    }*/
+        Navigator.pushNamed(context, '/');
+      // storage.clear();
+      // Navigator.of(context).pushReplacementNamed(LoginScreens.routeName);
+    }
 
     return Container(
       child: Drawer(
@@ -29,7 +30,7 @@ class AddDrower extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                  Navigator.pushNamed(context, '/login/classe');
+                  Navigator.pushNamed(context, '/home/classe');
               },
               child: ListTile(
                 title: Text('Home'),
@@ -41,7 +42,7 @@ class AddDrower extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                  Navigator.pushNamed(context, '/login/cour');
+                  Navigator.pushNamed(context, '/home/cour');
               
                 /*Navigator.of(context)
                     .pushReplacementNamed(UserProfileScreens.routeName);*/
@@ -59,7 +60,7 @@ class AddDrower extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                  Navigator.pushNamed(context, '/login/register');
+                  Navigator.pushNamed(context, '/home/register');
               },
               child: ListTile(
                 title: Text('Concours'),
@@ -71,7 +72,7 @@ class AddDrower extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Navigator.pushNamed(context, '/login/otp');
+                Navigator.pushNamed(context, '/home/otp');
               },
               child: ListTile(
                 title: Text('Nous contacter'),
@@ -80,7 +81,7 @@ class AddDrower extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Navigator.pushNamed(context, '/login/profile');
+                Navigator.pushNamed(context, '/home/profile');
               },
               child: ListTile(
                 title: Text('A propos de Nous'),
@@ -90,7 +91,7 @@ class AddDrower extends StatelessWidget {
             Spacer(),
             ListTile(
               onTap: () {
-                //_logoutnow();
+                _logoutnow();
               },
               trailing: Icon(
                 Icons.logout,
@@ -103,4 +104,6 @@ class AddDrower extends StatelessWidget {
       ),
     );
   }
+
+  LocalStorage(String s) {}
 }

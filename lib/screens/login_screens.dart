@@ -2,6 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:quizstar/screens/style/theme.dart';
+import 'dart:async';
+import 'dart:io';
+
+// import 'package:http/http.dart' as http;
+// import 'package:xml/xml.dart' as xml;
+// import 'package:flutter_appavailability/flutter_appavailability.dart';
+// import 'package:package_info/package_info.dart';
 
 class LoginScreens extends StatefulWidget {
   static const routeName = '/login-screens';
@@ -12,7 +19,7 @@ class LoginScreens extends StatefulWidget {
 class _LoginScreensState extends State<LoginScreens> {
   final _form = GlobalKey<FormState>();
   //String _username;
-  // String _password;
+  //String _password;
 
   void _loginNow() async {
     Navigator.pushNamed(context, '/home');
