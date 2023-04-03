@@ -20,6 +20,7 @@ class _LoginScreensState extends State<LoginScreens> {
   final _form = GlobalKey<FormState>();
   //String _username;
   //String _password;
+  bool _obscureText = true;
 
   void _loginNow() async {
     Navigator.pushNamed(context, '/home');
@@ -55,116 +56,138 @@ class _LoginScreensState extends State<LoginScreens> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Camschool",
-        ),
-        centerTitle: true,
-        backgroundColor: blueColor,
+Widget build(BuildContext context) {
+  Size size = MediaQuery.of(context).size;
+  return Scaffold(
+    appBar: AppBar(
+      title: Text(
+        "Camschool",
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Form(
-            key: _form,
-            child: Column(
-              children: [
-                SizedBox(height: size.height * 0.03),
-                SvgPicture.asset(
-                  "assets/icons/login.svg",
-                  height: size.height * 0.35,
-                ),
-                Text(
-                  "Login",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: size.height * 0.03),
-                TextFormField(
-                  validator: (v) {
-                    if (v.isEmpty) {
-                      return 'Enter your Username';
-                    }
-                    return null;
-                  },
-                  /*onSaved: (v) {
-                    _username = v;
-                  },*/
-                  decoration: InputDecoration(
-                    icon: Icon(
-                      Icons.person,
-                      color: blueColor,
-                    ),
-                    labelText: "Username",
+      centerTitle: true,
+      backgroundColor: blueColor,
+    ),
+    body: SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Form(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          key: _form,
+          child: Column(
+            children: [
+              SizedBox(height: size.height * 0.03),
+              SvgPicture.asset(
+                "assets/icons/login.svg",
+                height: size.height * 0.35,
+              ),
+              Text(
+                "Login",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: size.height * 0.03),
+              TextFormField(
+                validator: (v) {
+                  if (v.isEmpty) {
+                    return 'Enter your Phone Number';
+                  } else if (v.length != 9 || !v.startsWith('6')) {
+                    return 'Enter a valid Phone Number';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  icon: Icon(
+                    Icons.person,
+                    color: blueColor,
                   ),
-                  cursorColor: blueColor,
+                  labelText: "Phone Number",
                 ),
-                TextFormField(
-                  cursorColor: blueColor,
-                  validator: (v) {
-                    if (v.isEmpty) {
-                      return 'Enter your Password';
-                    }
-                    return null;
-                  },
-                  /* onSaved: (v) {
-                    _password = v;
-                  },*/
-                  decoration: InputDecoration(
-                    icon: Icon(
-                      Icons.lock,
-                      color: blueColor,
-                    ),
-                    labelText: "Password",
+                cursorColor: blueColor,
+                onFieldSubmitted: (_) {
+                  // Validation automatique lorsque l'utilisateur passe au champ suivant
+                  _form.currentState.validate();
+                },
+              ),
+              TextFormField(
+                cursorColor: blueColor,
+                obscureText: _obscureText,
+                validator: (v) {
+                  if (v.isEmpty) {
+                    return 'Enter your Password';
+                  } else if (v.length < 4) {
+                    return 'Password must be at least 4 characters';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  icon: Icon(
+                    Icons.lock,
+                    color: blueColor,
                   ),
-                  obscureText: true,
+                  labelText: "Password",
+                  suffixIcon: IconButton(
+                  icon: Icon(
+                    _obscureText ? Icons.visibility : Icons.visibility_off,
+                    color: blueColor,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _obscureText = !_obscureText;
+                    });
+                  },
                 ),
-                SizedBox(height: size.height * 0.03),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RaisedButton(
-                      color: blueColor,
-                      onPressed: () {
+                ),
+                // obscureText: true,
+                onFieldSubmitted: (_) {
+                  // Validation automatique lorsque l'utilisateur appuie sur la touche "Terminé"
+                  _form.currentState.validate();
+                },
+              ),
+              SizedBox(height: size.height * 0.03),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  RaisedButton(
+                    color: blueColor,
+                    onPressed: () {
+                      if (_form.currentState.validate()) {
                         _loginNow();
                         print("pressed");
-                      },
-                      child: Text("Login"),
+                      }
+                    },
+                    child: Text("Login"),
+                  ),
+                  SizedBox(width: size.height * 0.03),
+                  FlatButton(
+                    onPressed: () {
+                      /*Navigator.of(context)
+                          .pushReplacementNamed(RegisterScreens.routeName);*/
+                      Navigator.pushNamed(context, '/resgister');
+                      print("bonjour");
+                    },
+                    child: Text("Register Now"),
+                  ),
+                ],
+              ),
+              SizedBox(height: size.height * 0.03),
+              SizedBox(height: size.height * 0.03),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: 100,
                     ),
-                    SizedBox(width: size.height * 0.03),
-                    FlatButton(
-                      onPressed: () {
-                        /*Navigator.of(context)
-                            .pushReplacementNamed(RegisterScreens.routeName);*/
-                        Navigator.pushNamed(context, '/resgister');
-                        print("bonjour");
-                      },
-                      child: Text("Register Now"),
+                    Text(
+                      "mot de passe oublié?",
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Color.fromARGB(255, 85, 153, 209)),
                     ),
-                  ],
-                ),
-                SizedBox(height: size.height * 0.03),
-                SizedBox(height: size.height * 0.03),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 100,
-                      ),
-                      Text(
-                        "mot de passe oublié?",
-                        style: TextStyle(
-                            fontSize: 14,
-                            color: Color.fromARGB(255, 85, 153, 209)),
-                      ),
-                    ]),
-              ],
-            ),
+                  ]),
+            ],
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
 }

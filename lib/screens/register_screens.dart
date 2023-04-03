@@ -9,10 +9,13 @@ class RegisterScreens extends StatefulWidget {
 }
 
 class _RegisterScreensState extends State<RegisterScreens> {
-  String _username;
+  String _user_first_name;
+  String _user_last_name;
   String _password;
   String _confPassword;
+  String _phoneNumber;
   String _regions = 'ouest';
+  bool _showPassword = true;
   final _form = GlobalKey<FormState>();
 
   List items = ["ouest", "centre", "Nord", "sud"];
@@ -61,15 +64,176 @@ class _RegisterScreensState extends State<RegisterScreens> {
     // }
   }
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   //final itemss = Provider.of<PostsState>(context).profile;
+  //   Size size = MediaQuery.of(context).size;
+  //   return Scaffold(
+  //     appBar: AppBar(
+  //       title: Text("Camschool"),
+  //       centerTitle: true,
+  //       backgroundColor: blueColor,
+  //     ),
+  //     body: SingleChildScrollView(
+  //       child: Padding(
+  //         padding: EdgeInsets.all(8),
+  //         child: Form(
+  //           key: _form,
+  //           child: Column(
+  //             children: [
+  //               SizedBox(height: size.height * 0.003),
+  //               SvgPicture.asset(
+  //                 "assets/icons/signup.svg",
+  //                 height: size.height * 0.2,
+  //               ),
+  //               Text(
+  //                 "Register",
+  //                 style: TextStyle(fontWeight: FontWeight.bold),
+  //               ),
+  //               SizedBox(height: size.height * 0.03),
+  //               Container(
+  //                 child: DropdownButtonFormField(
+  //                   //controller: profileControler,
+  //                   decoration: InputDecoration(
+  //                     icon: Icon(
+  //                       Icons.select_all,
+  //                       color: blueColor,
+  //                     ),
+  //                     labelText: "selectionner la region",
+  //                   ),
+  //                   icon: Icon(Icons.arrow_drop_down),
+  //                   isExpanded: true,
+  //                   value: _regions,
+  //                   onChanged: (newvalue) {
+  //                     setState(() {
+  //                       _regions = newvalue;
+  //                     });
+  //                   },
+  //                   items: items.map((items) {
+  //                     return DropdownMenuItem(
+  //                       value: items,
+  //                       child: Text(items),
+  //                     );
+  //                   }).toList(),
+  //                 ),
+  //               ),
+  //               TextFormField(
+  //                 decoration: InputDecoration(
+  //                   icon: Icon(
+  //                     Icons.person,
+  //                     color: blueColor,
+  //                   ),
+  //                   labelText: "Nom",
+  //                 ),
+  //                 validator: (v) {
+  //                   if (v.isEmpty) {
+  //                     return 'Enter votre Nom';
+  //                   }
+  //                   return null;
+  //                 },
+  //                 onSaved: (v) {
+  //                   _username = v;
+  //                 },
+  //               ),
+  //               TextFormField(
+  //                 decoration: InputDecoration(
+  //                   icon: Icon(
+  //                     Icons.person,
+  //                     color: blueColor,
+  //                   ),
+  //                   labelText: "Prenom",
+  //                 ),
+  //                 validator: (v) {
+  //                   if (v.isEmpty) {
+  //                     return 'Enter votre Prenom';
+  //                   }
+  //                   return null;
+  //                 },
+  //                 onSaved: (v) {
+  //                   _username = v;
+  //                 },
+  //               ),
+  //               TextFormField(
+  //                 decoration: InputDecoration(
+  //                   icon: Icon(
+  //                     Icons.lock,
+  //                     color: blueColor,
+  //                   ),
+  //                   labelText: "phone_number",
+  //                 ),
+  //                 validator: (v) {
+  //                   if (v.isEmpty) {
+  //                     return 'phone number is required';
+  //                   }
+  //                   return null;
+  //                 },
+  //                 onChanged: (v) {
+  //                   setState(() {
+  //                     _password = v;
+  //                   });
+  //                 },
+  //                 obscureText: true,
+  //               ),
+  //               TextFormField(
+  //                 decoration: InputDecoration(
+  //                   icon: Icon(
+  //                     Icons.lock,
+  //                     color: blueColor,
+  //                   ),
+  //                   labelText: "Etablissement",
+  //                 ),
+  //                 validator: (v) {
+  //                   if (v.isEmpty) {
+  //                     return "classe";
+  //                   }
+  //                   if (_password != v) {
+  //                     return 'Etablissement';
+  //                   }
+  //                   return null;
+  //                 },
+  //                 onSaved: (v) {
+  //                   _confPassword = v;
+  //                 },
+  //                 obscureText: true,
+  //               ),
+  //               SizedBox(height: size.height * 0.03),
+  //               Row(
+  //                 mainAxisAlignment: MainAxisAlignment.center,
+  //                 children: [
+  //                   RaisedButton(
+  //                     color: blueColor,
+  //                     onPressed: () {
+  //                       _registerNow();
+  //                       print("register");
+  //                     },
+  //                     child: Text("Register"),
+  //                   ),
+  //                   FlatButton(
+  //                     onPressed: () {
+  //                       Navigator.pushNamed(context, '/login');
+  //                       /*Navigator.of(context)
+  //                           .pushReplacementNamed(LoginScreens.routeName);*/
+  //                     },
+  //                     child: Text("Login Now"),
+  //                   ),
+  //                 ],
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
-    //final itemss = Provider.of<PostsState>(context).profile;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Camschool"),
+        title: Text("Inscription"),
         centerTitle: true,
-        backgroundColor: blueColor,
+        backgroundColor: Colors.blue,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -78,162 +242,144 @@ class _RegisterScreensState extends State<RegisterScreens> {
             key: _form,
             child: Column(
               children: [
-                SizedBox(height: size.height * 0.003),
-                SvgPicture.asset(
-                  "assets/icons/signup.svg",
-                  height: size.height * 0.2,
-                ),
-                Text(
-                  "Register",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
                 SizedBox(height: size.height * 0.03),
-                Container(
-                  child: DropdownButtonFormField(
-                    //controller: profileControler,
-                    decoration: InputDecoration(
-                      icon: Icon(
-                        Icons.select_all,
-                        color: blueColor,
-                      ),
-                      labelText: "selectionner la region",
-                    ),
-                    icon: Icon(Icons.arrow_drop_down),
-                    isExpanded: true,
-                    value: _regions,
-                    onChanged: (newvalue) {
-                      setState(() {
-                        _regions = newvalue;
-                      });
-                    },
-                    items: items.map((items) {
-                      return DropdownMenuItem(
-                        value: items,
-                        child: Text(items),
-                      );
-                    }).toList(),
-                  ),
-                ),
-
-                /* TextFormField(
-                  //controller: profileControler,
-                  decoration: InputDecoration(
-                    icon: Icon(
-                      Icons.person,
-                      color: blueColor,
-                    ),
-                    labelText: "region",
-                  ),
-                  validator: (v) {
-                    if (v.isEmpty) {
-                      return 'region';
-                    }
-                    return null;
-                  },
-                  onSaved: (v) {
-                    _regions = v;
-                  },
-                ), */
                 TextFormField(
                   decoration: InputDecoration(
                     icon: Icon(
                       Icons.person,
-                      color: blueColor,
+                      color: Colors.blue,
                     ),
                     labelText: "Nom",
                   ),
                   validator: (v) {
                     if (v.isEmpty) {
-                      return 'Enter votre Nom';
+                      return 'Entrez votre nom';
                     }
                     return null;
                   },
                   onSaved: (v) {
-                    _username = v;
+                    _user_first_name = v;
                   },
                 ),
                 TextFormField(
                   decoration: InputDecoration(
                     icon: Icon(
                       Icons.person,
-                      color: blueColor,
+                      color: Colors.blue,
                     ),
-                    labelText: "Prenom",
+                    labelText: "Prénom",
                   ),
                   validator: (v) {
                     if (v.isEmpty) {
-                      return 'Enter votre Prenom';
+                      return 'Entrez votre prénom';
                     }
                     return null;
                   },
                   onSaved: (v) {
-                    _username = v;
+                    _user_last_name = v;
                   },
                 ),
                 TextFormField(
                   decoration: InputDecoration(
                     icon: Icon(
-                      Icons.lock,
-                      color: blueColor,
+                      Icons.phone,
+                      color: Colors.blue,
                     ),
-                    labelText: "phone_number",
+                    labelText: "Numéro de téléphone",
                   ),
+                  keyboardType: TextInputType.phone,
                   validator: (v) {
                     if (v.isEmpty) {
-                      return 'phone number is required';
+                      return 'Le numéro de téléphone est requis';
+                    }
+                    if (!RegExp(r"^[6]{1}[0-9]{8}$").hasMatch(v)) {
+                      return 'Entrez un numéro de téléphone valide (commençant par 6 et contenant 9 chiffres)';
                     }
                     return null;
                   },
-                  onChanged: (v) {
-                    setState(() {
-                      _password = v;
-                    });
+                  onSaved: (v) {
+                    _phoneNumber = v;
                   },
-                  obscureText: true,
                 ),
                 TextFormField(
                   decoration: InputDecoration(
                     icon: Icon(
                       Icons.lock,
-                      color: blueColor,
+                      color: Colors.blue,
                     ),
-                    labelText: "Etablissement",
+                    labelText: "Mot de passe",
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _showPassword = !_showPassword;
+                        });
+                      },
+                      child: Icon(
+                        _showPassword
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                        color: Colors.grey,
+                      ),
+                    ),
                   ),
+                  obscureText: !_showPassword,
                   validator: (v) {
                     if (v.isEmpty) {
-                      return "classe";
+                      return 'Le mot de passe est requis';
+                    }
+                    if (v.length < 6) {
+                      return 'Le mot de passe doit contenir au moins 6 caractères';
+                    }
+                    return null;
+                  },
+                  onSaved: (v) {
+                    _password = v;
+                  },
+                ),
+                TextFormField(
+                  decoration: InputDecoration(
+                    icon: Icon(
+                      Icons.lock,
+                      color: Colors.blue,
+                    ),
+                    labelText: "Confirmer le mot de passe",
+                  ),
+                  obscureText: true,
+                  validator: (v) {
+                    if (v.isEmpty) {
+                      return 'La confirmation du mot de passe est requise';
                     }
                     if (_password != v) {
-                      return 'Etablissement';
+                      return 'Les mots de passe ne correspondent pas';
                     }
                     return null;
                   },
-                  onSaved: (v) {
+                 onSaved: (v) {
                     _confPassword = v;
                   },
-                  obscureText: true,
                 ),
                 SizedBox(height: size.height * 0.03),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RaisedButton(
-                      color: blueColor,
-                      onPressed: () {
-                        _registerNow();
-                        print("register");
-                      },
-                      child: Text("Register"),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_form.currentState.validate()) {
+                      _form.currentState.save();
+                      // TODO: Inscription de l'utilisateur
+                    }
+                  },
+                  child: Text(
+                    "S'inscrire",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: size.width * 0.35,
+                      vertical: size.height * 0.02,
                     ),
-                    FlatButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/login');
-                        /*Navigator.of(context)
-                            .pushReplacementNamed(LoginScreens.routeName);*/
-                      },
-                      child: Text("Login Now"),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),
@@ -242,4 +388,4 @@ class _RegisterScreensState extends State<RegisterScreens> {
       ),
     );
   }
-}
+  }
