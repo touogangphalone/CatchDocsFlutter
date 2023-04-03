@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 class AddDrower extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    /*LocalStorage storage = LocalStorage("usertoken");
+    // LocalStorage storage = LocalStorage("usertoken");
     _logoutnow() {
-      storage.clear();
-      Navigator.of(context).pushReplacementNamed(LoginScreens.routeName);
-    }*/
+        Navigator.pushNamed(context, '/');
+      // storage.clear();
+      // Navigator.of(context).pushReplacementNamed(LoginScreens.routeName);
+    }
 
     return Container(
       child: Drawer(
@@ -28,7 +29,9 @@ class AddDrower extends StatelessWidget {
               height: 9,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                  Navigator.pushNamed(context, '/home/classe');
+              },
               child: ListTile(
                 title: Text('Home'),
                 leading: Icon(
@@ -39,6 +42,8 @@ class AddDrower extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
+                  Navigator.pushNamed(context, '/home/cour');
+              
                 /*Navigator.of(context)
                     .pushReplacementNamed(UserProfileScreens.routeName);*/
               },
@@ -54,7 +59,9 @@ class AddDrower extends StatelessWidget {
               height: 12,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                  Navigator.pushNamed(context, '/home/register');
+              },
               child: ListTile(
                 title: Text('Concours'),
                 leading: Icon(Icons.work_sharp, color: Colors.lightBlue),
@@ -64,14 +71,18 @@ class AddDrower extends StatelessWidget {
               height: 12,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, '/home/otp');
+              },
               child: ListTile(
                 title: Text('Nous contacter'),
                 leading: Icon(Icons.contact_phone, color: Colors.blueGrey),
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, '/home/profile');
+              },
               child: ListTile(
                 title: Text('A propos de Nous'),
                 leading: Icon(Icons.house, color: Colors.blueGrey),
@@ -80,7 +91,7 @@ class AddDrower extends StatelessWidget {
             Spacer(),
             ListTile(
               onTap: () {
-                //_logoutnow();
+                _logoutnow();
               },
               trailing: Icon(
                 Icons.logout,
@@ -93,4 +104,6 @@ class AddDrower extends StatelessWidget {
       ),
     );
   }
+
+  LocalStorage(String s) {}
 }

@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:quizstar/screens/classe_page.dart';
+import 'package:quizstar/screens/cour.dart';
+import 'package:quizstar/screens/resultat_concour.dart';
 import 'package:quizstar/screens/style/theme.dart';
+import 'package:quizstar/screens/user_profile.dart';
 import 'package:quizstar/widgets/app_drower.dart';
 import 'package:quizstar/widgets/common.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:flutter/src/widgets/framework.dart';
+
+import 'admin_discution.dart';
+import 'apropos.dart';
+import 'champoins_concour.dart';
+import 'change_password.dart';
+import 'forum.dart';
+import 'notification.dart';
 
 class HomeMain extends StatefulWidget {
   static const routName = '/home-main';
@@ -22,6 +33,12 @@ class _HomeMainState extends State<HomeMain> {
   bool _isScrollDown = false;
   ScrollController _scrollController;
   bool _showAppNavBar = true;
+  bool _showHome = true;
+  bool _showClasse = false;
+  bool _showResult = false;
+  bool _showChat = false;
+  bool _showForum = false;
+  bool _showNotification = false;
 
   @override
   void initState() {
@@ -87,10 +104,19 @@ class _HomeMainState extends State<HomeMain> {
         ),
       );
     else*/
+    // return ResponsiveBuilder(
+    //   builder: (BuildContext context, SizingInformation sizingInformation) {
+    //   return Scaffold(
+    //       body: Center(
+    //           child: Text(
+    //         'Bonjour, bienvenue sur cette page !',
+    //         style: TextStyle(fontSize: 24),
+    //       )),
+    //   );});
+
     return ResponsiveBuilder(
-        builder: (BuildContext context, SizingInformation sizingInformation) {
+      builder: (BuildContext context, SizingInformation sizingInformation) {
       return Scaffold(
-        //drawer: AddDrower(),
         bottomNavigationBar: _showAppNavBar
             ? Container(
                 padding: EdgeInsets.symmetric(horizontal: 20),
@@ -107,6 +133,8 @@ class _HomeMainState extends State<HomeMain> {
                         onTap: () {
                           setState(() {
                             _currentNavIndex = 0;
+                            _showClasses();
+                            // Navigator.pushNamed(context, '/home');
                           });
                         },
                         child: SingleNavBarButton(
@@ -117,6 +145,7 @@ class _HomeMainState extends State<HomeMain> {
                     InkWell(
                         onTap: () {
                           setState(() {
+                            _showResults();
                             _currentNavIndex = 1;
                           });
                           /*Navigator.of(context)
@@ -130,6 +159,7 @@ class _HomeMainState extends State<HomeMain> {
                     InkWell(
                         onTap: () {
                           setState(() {
+                            _showChats();
                             _currentNavIndex = 2;
                           });
                           /*Navigator.of(context)
@@ -142,18 +172,20 @@ class _HomeMainState extends State<HomeMain> {
                         )),
                     InkWell(
                         onTap: () {
+                          _showForums();
                           setState(() {
                             _currentNavIndex = 3;
                           });
                         },
                         child: SingleNavBarButton(
-                          name: "Infos",
-                          icon: FontAwesomeIcons.briefcase,
+                          name: "Forum",
+                          icon: FontAwesomeIcons.forumbee,
                           selectedButton: _currentNavIndex == 3 ? true : false,
                         )),
                     InkWell(
                         onTap: () {
                           setState(() {
+                          _showNotifications();
                             _currentNavIndex = 4;
                           });
                         },
@@ -227,23 +259,12 @@ class _HomeMainState extends State<HomeMain> {
         ),
         body: Column(
           children: [
-            // CustomAppBar(
-            // sizingInformation: sizingInformation,
-            // ),
-            Container(
-              height: 45,
-              /*child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: regions.length,
-                itemBuilder: (ctx, i) => SingleRegions(regions[i]),
-              ),*/
-            ),
-            Divider(),
-            Expanded(
-                /*child: ListView.builder(
-                  itemCount: posts.length,
-                itemBuilder: (ctx, i) => SinglePost(posts[i]),
-                  ),*/
+            Expanded(child: _showHome ? CourScreens() : 
+            _showForum ? ChangePasswordPage(): 
+            _showChat ? AdminDiscussionScreen(): 
+            _showResult ? ResultatConcourScreen(): 
+            _showClasse ? HomeClasseScreens(): 
+            _showNotification ? NotificationScreen() : null ,
                 ),
           ],
         ),
@@ -262,4 +283,74 @@ class _HomeMainState extends State<HomeMain> {
       _showAppNavBar = true;
     });
   }
+  
+  void _showClasses() {
+    setState(() {
+      _showClasse = true;
+      _showHome = false;
+      _showResult = false;
+      _showChat = false;
+      _showForum = false;
+      _showNotification = false;
+    });
+  }
+
+
+  void _showHomes() {
+    setState(() {
+      _showHome = true;
+      _showClasse = false;
+      _showResult = false;
+      _showChat = false;
+      _showForum = false;
+      _showNotification = false;
+    });
+  }
+
+  void _showResults() {
+    setState(() {
+      _showResult = true;
+      _showHome = false;
+      _showClasse = false;
+      _showChat = false;
+      _showForum = false;
+      _showNotification = false;
+    });
+  }
+
+  void _showChats() {
+    setState(() {
+      _showChat = true;
+      _showResult = false;
+      _showHome = false;
+      _showClasse = false;
+      _showForum = false;
+      _showNotification = false;
+    });
+  }
+
+  void _showForums() {
+    setState(() {
+      _showForum = true;
+      _showChat = false;
+      _showResult = false;
+      _showHome = false;
+      _showClasse = false;
+      _showNotification = false;
+    });
+  }
+
+  void _showNotifications() {
+    setState(() {
+      _showNotification = true;
+      _showForum = false;
+      _showChat = false;
+      _showResult = false;
+      _showHome = false;
+      _showClasse = false;
+    });
+  }
+
 }
+
+

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizstar/model/classes.dart';
 import 'package:quizstar/screens/HomeMain.dart';
 import 'package:quizstar/screens/classe_page.dart';
 import 'package:quizstar/screens/cour.dart';
@@ -15,11 +16,27 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Evaluation",
+      home: LoginScreens(),
+      onGenerateRoute: (settings) {
+        if (settings.name == '/classe/cour') {
+          return MaterialPageRoute(builder: (context) => CourScreens());
+        }
+        return null;
+      },
+      routes: {
+        '/home': (context) => HomeMain(),
+        '/resgister': (context) => RegisterScreens(),
+        '/otp': (context) => OtpPage(),
+        '/cour': (context) => CourScreens(),
+        '/classe': (context) => HomeClasseScreens(),
+        // '/classe/cour': (context) => OtpPage(),
+        
+        // Ajoutez des routes pour vos autres pages ici
+      },
+
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
-      //home: splashscreen(),
-      home: HomeMain(),
     );
   }
 }
