@@ -361,6 +361,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                 SizedBox(height: size.height * 0.03),
                 ElevatedButton(
                   onPressed: () {
+                    Navigator.pushNamed(context, '/login');
                     if (_form.currentState.validate()) {
                       _form.currentState.save();
                       // TODO: Inscription de l'utilisateur

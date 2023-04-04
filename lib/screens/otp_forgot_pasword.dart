@@ -2,24 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:quizstar/screens/style/theme.dart';
 
-class OtpPage extends StatefulWidget {
-  //const OtpPage({Key? key}) : super(key: key);
+class OtpScrenn extends StatefulWidget {
+  //const OtpScrenn({Key? key}) : super(key: key);
   static const routeName = '/otp-screens';
 
   @override
-  State<OtpPage> createState() => _OtpPageState();
+  State<OtpScrenn> createState() => _OtpScrennState();
 }
 
-class _OtpPageState extends State<OtpPage> {
+class _OtpScrennState extends State<OtpScrenn> {
   TextEditingController textEditingController = TextEditingController();
   String currentText = "";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Entrez le code que vous avez reçu par SMS'),
-        ),
+      appBar: AppBar(
+        title: Text('Entrez le code que vous avez reçu par SMS'),
+      ),
         body: Container(
           child: Padding(
             padding: const EdgeInsets.all(30),
@@ -78,7 +78,7 @@ class _OtpPageState extends State<OtpPage> {
                     RaisedButton(
                       color: blueColor,
                       onPressed: () {
-                        //_registerNow();
+                        Navigator.pushNamed(context, '/reset-password');
                         print("resend otp");
                       },
                       child: Text("renvoyer le code"),

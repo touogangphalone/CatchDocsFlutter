@@ -169,19 +169,18 @@ Widget build(BuildContext context) {
               ),
               SizedBox(height: size.height * 0.03),
               SizedBox(height: size.height * 0.03),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: 100,
-                    ),
-                    Text(
-                      "mot de passe oublié?",
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: Color.fromARGB(255, 85, 153, 209)),
-                    ),
-                  ]),
+          GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, '/phonenumber');
+              },
+              child: Text(
+                "mot de passe oublié?",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Color.fromARGB(255, 85, 153, 209),
+                ),
+              ),
+            ),
             ],
           ),
         ),

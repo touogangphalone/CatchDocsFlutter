@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizstar/widgets/app_drower.dart';
 
 class Message {
   final String sender;
@@ -22,9 +23,10 @@ class _AdminDiscussionScreenState extends State<AdminDiscussionScreen> {
   Widget build(BuildContext context) {
     _discussions.sort((a, b) => b.dateTime.compareTo(a.dateTime));
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Discussions de forum'),
-      // ),
+      drawer: AddDrower(),
+      appBar: AppBar(
+        title: Text('Ecrire à l\'administration en cas de problème'),
+      ),
       body: Column(
         children: [
           Expanded(

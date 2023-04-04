@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizstar/widgets/app_drower.dart';
 
 class UserProfile extends StatefulWidget {
   // const UserProfile({Key? key}) : super(key: key);
@@ -24,13 +25,18 @@ class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: AddDrower(),
+    appBar: AppBar(
+      title: Text('Profile'),
+    ),
       body: Column(
         children: [
           SizedBox(height: 20),
           // Afficher l'image de profil de l'utilisateur
           CircleAvatar(
             radius: 50,
-            backgroundImage: NetworkImage(_imageUrl),
+            backgroundImage: NetworkImage('https://images.unsplash.com/photo-1605821469603-6112b2cd8254?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=689&q=80'),
+            // backgroundImage: NetworkImage(_imageUrl),
           ),
           SizedBox(height: 20),
           // Afficher les informations de l'utilisateur

@@ -2,8 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AddDrower extends StatelessWidget {
+  // Ajouter un constructeur avec un paramètre d'image de profil
+  const AddDrower({Key key,  this.profileImage}) : super(key: key);
+  final String profileImage; // Le lien vers l'image de profil de l'utilisateur
+
   @override
   Widget build(BuildContext context) {
+    
     // LocalStorage storage = LocalStorage("usertoken");
     _logoutnow() {
         Navigator.pushNamed(context, '/');
@@ -13,11 +18,19 @@ class AddDrower extends StatelessWidget {
 
     return Container(
       child: Drawer(
+        
         child: Column(
           children: [
-            Image.network(
-              'https://images.unsplash.com/photo-1605821469603-6112b2cd8254?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=689&q=80',
+          Container(
+          alignment: Alignment.centerRight,
+          child: UserAccountsDrawerHeader(
+            accountName: Text("Nom de l'utilisateur"),
+            accountEmail: Text("Email de l'utilisateur"),
+            currentAccountPicture: CircleAvatar(
+              backgroundImage: NetworkImage('https://images.unsplash.com/photo-1605821469603-6112b2cd8254?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=689&q=80'),
             ),
+          ),
+        ),
             Text(
               "CamSchool",
               style: TextStyle(
@@ -30,7 +43,8 @@ class AddDrower extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                  Navigator.pushNamed(context, '/home/classe');
+                Navigator.pop(context); // Fermer le menu
+                  Navigator.pushNamed(context, '/home');
               },
               child: ListTile(
                 title: Text('Home'),
@@ -42,7 +56,8 @@ class AddDrower extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                  Navigator.pushNamed(context, '/home/cour');
+                Navigator.pop(context); // Fermer le menu
+                  Navigator.pushNamed(context, '/profile');
               
                 /*Navigator.of(context)
                     .pushReplacementNamed(UserProfileScreens.routeName);*/
@@ -60,11 +75,32 @@ class AddDrower extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                  Navigator.pushNamed(context, '/home/register');
+                Navigator.pop(context); // Fermer le menu
+                  Navigator.pushNamed(context, '/concour');
               },
               child: ListTile(
                 title: Text('Concours'),
                 leading: Icon(Icons.work_sharp, color: Colors.lightBlue),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.pop(context); // Fermer le menu
+                  Navigator.pushNamed(context, '/forum');
+              },
+              child: ListTile(
+                title: Text('Forum'),
+                leading: Icon(Icons.forum, color: Colors.lightBlue),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.pop(context); // Fermer le menu
+                  Navigator.pushNamed(context, '/admin');
+              },
+              child: ListTile(
+                title: Text('Sinistre'),
+                leading: Icon(Icons.error, color: Colors.lightBlue),
               ),
             ),
             Divider(
@@ -72,7 +108,8 @@ class AddDrower extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Navigator.pushNamed(context, '/home/otp');
+                Navigator.pop(context); // Fermer le menu
+                Navigator.pushNamed(context, '/contactez');
               },
               child: ListTile(
                 title: Text('Nous contacter'),
@@ -81,7 +118,8 @@ class AddDrower extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Navigator.pushNamed(context, '/home/profile');
+                Navigator.pop(context); // Fermer le menu
+                Navigator.pushNamed(context, '/apropos');
               },
               child: ListTile(
                 title: Text('A propos de Nous'),
@@ -91,6 +129,7 @@ class AddDrower extends StatelessWidget {
             Spacer(),
             ListTile(
               onTap: () {
+                Navigator.pop(context);
                 _logoutnow();
               },
               trailing: Icon(

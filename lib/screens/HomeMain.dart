@@ -156,32 +156,32 @@ class _HomeMainState extends State<HomeMain> {
                           icon: FontAwesomeIcons.book,
                           selectedButton: _currentNavIndex == 1 ? true : false,
                         )),
-                    InkWell(
-                        onTap: () {
-                          setState(() {
-                            _showChats();
-                            _currentNavIndex = 2;
-                          });
-                          /*Navigator.of(context)
-                                .pushReplacementNamed(AddPostScreen.routeName);*/
-                        },
-                        child: SingleNavBarButton(
-                          name: "Chat",
-                          icon: FontAwesomeIcons.message,
-                          selectedButton: _currentNavIndex == 2 ? true : false,
-                        )),
-                    InkWell(
-                        onTap: () {
-                          _showForums();
-                          setState(() {
-                            _currentNavIndex = 3;
-                          });
-                        },
-                        child: SingleNavBarButton(
-                          name: "Forum",
-                          icon: FontAwesomeIcons.forumbee,
-                          selectedButton: _currentNavIndex == 3 ? true : false,
-                        )),
+                    // InkWell(
+                    //     onTap: () {
+                    //       setState(() {
+                    //         _showChats();
+                    //         _currentNavIndex = 2;
+                    //       });
+                    //       /*Navigator.of(context)
+                    //             .pushReplacementNamed(AddPostScreen.routeName);*/
+                    //     },
+                    //     child: SingleNavBarButton(
+                    //       name: "Chat",
+                    //       icon: FontAwesomeIcons.message,
+                    //       selectedButton: _currentNavIndex == 2 ? true : false,
+                    //     )),
+                    // InkWell(
+                    //     onTap: () {
+                    //       _showForums();
+                    //       setState(() {
+                    //         _currentNavIndex = 3;
+                    //       });
+                    //     },
+                    //     child: SingleNavBarButton(
+                    //       name: "Forum",
+                    //       icon: FontAwesomeIcons.forumbee,
+                    //       selectedButton: _currentNavIndex == 3 ? true : false,
+                    //     )),
                     InkWell(
                         onTap: () {
                           setState(() {
@@ -246,7 +246,8 @@ class _HomeMainState extends State<HomeMain> {
             InkWell(
               child: CircleAvatar(
                 maxRadius: 24.0,
-                //borderRadius: BorderRadius.all(Radius.circular(40)),
+                backgroundImage: NetworkImage('https://images.unsplash.com/photo-1605821469603-6112b2cd8254?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=689&q=80'),
+            //borderRadius: BorderRadius.all(Radius.circular(40)),
                 /*backgroundImage: NetworkImage(
                   "http://127.0.0.1:8000${profiles[0].profileUrl}",
                 ),*/

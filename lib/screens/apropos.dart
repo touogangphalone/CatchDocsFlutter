@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:quizstar/widgets/app_drower.dart';
 
 class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('E-Learning App'),
-      // ),
+      drawer: AddDrower(),
+      appBar: AppBar(
+        title: Text('E-Learning App'),
+      ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
