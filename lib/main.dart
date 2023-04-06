@@ -26,12 +26,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "Evaluation",
       home: LoginScreens(),
-      onGenerateRoute: (settings) {
-        if (settings.name == '/classe/cour') {
-          return MaterialPageRoute(builder: (context) => CourScreens());
-        }
-        return null;
-      },
+      // onGenerateRoute: (settings) {
+      //   if (settings.name == '/classe/cour') {
+      //     return MaterialPageRoute(builder: (context) => CourScreens());
+      //   }
+      //   return null;
+      // },
       routes: {
         '/login': (context) => LoginScreens(),
         '/home': (context) => HomeMain(),
@@ -52,7 +52,6 @@ class MyApp extends StatelessWidget {
         
         // Ajoutez des routes pour vos autres pages ici
       },
-
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),

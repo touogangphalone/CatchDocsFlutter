@@ -5,11 +5,6 @@ import 'package:quizstar/screens/style/theme.dart';
 import 'dart:async';
 import 'dart:io';
 
-// import 'package:http/http.dart' as http;
-// import 'package:xml/xml.dart' as xml;
-// import 'package:flutter_appavailability/flutter_appavailability.dart';
-// import 'package:package_info/package_info.dart';
-
 class LoginScreens extends StatefulWidget {
   static const routeName = '/login-screens';
   @override
