@@ -15,6 +15,7 @@ import 'package:quizstar/screens/phone_number.dart';
 import 'package:quizstar/screens/register_screens.dart';
 import 'package:quizstar/screens/reset_password.dart';
 import 'package:quizstar/screens/user_profile.dart';
+import 'package:quizstar/screens/quiz_screen.dart';
 import 'package:quizstar/splash.dart';
 
 void main() => runApp(MyApp());
@@ -25,21 +26,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Evaluation",
-      home: LoginScreens(),
-      // onGenerateRoute: (settings) {
-      //   if (settings.name == '/classe/cour') {
-      //     return MaterialPageRoute(builder: (context) => CourScreens());
-      //   }
-      //   return null;
-      // },
+      home: HomeMain(),
+      // home: LoginScreens(),
       routes: {
+        '/classe': (context) => HomeClasseScreens(),
+        '/cour': (context) => CourScreens(),
+        '/quiz': (context) => QuizScreen(),
         '/login': (context) => LoginScreens(),
         '/home': (context) => HomeMain(),
         '/resgister': (context) => RegisterScreens(),
         '/otp': (context) => OtpPage(),
         '/otp-screnn': (context) => OtpScrenn(),
-        '/cour': (context) => CourScreens(),
-        '/classe': (context) => HomeClasseScreens(),
         '/profile': (context) => UserProfile(),
         '/concour': (context) => ConcoursPage(),
         '/admin': (context) => AdminDiscussionScreen(),
@@ -49,8 +46,20 @@ class MyApp extends StatelessWidget {
         '/phonenumber': (context) => PhoneNumberPage(),
         '/reset-password': (context) => ChangePasswordScreen(),
         // '/classe/cour': (context) => OtpPage(),
-        
         // Ajoutez des routes pour vos autres pages ici
+      },
+      onGenerateRoute: (RouteSettings settings) {
+        if (settings.name == '/classe/cour') {
+          return MaterialPageRoute(
+            builder: (BuildContext context) => CourScreens(),
+          );
+        }
+        return null;
+      },
+      onUnknownRoute: (RouteSettings settings) {
+        return MaterialPageRoute(
+          builder: (BuildContext context) => HomeMain(),
+        );
       },
       theme: ThemeData(
         primarySwatch: Colors.indigo,

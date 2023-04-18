@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizstar/provider/alert_provider.dart';
 import 'package:quizstar/widgets/app_drower.dart';
 
 class UserProfile extends StatefulWidget {
@@ -16,6 +17,7 @@ class _UserProfileState extends State<UserProfile> {
   String _email = "jean.dupont@mail.com";
   String _password = "password";
   String _imageUrl = "assets/icons/signup.svg";
+    final AlertProvider alertProvider = AlertProvider();
 
   // Définir la méthode pour modifier le mot de passe
   void _changePassword() {
@@ -25,7 +27,7 @@ class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: AddDrower(),
+      // drawer: AddDrower(),
     appBar: AppBar(
       title: Text('Profile'),
     ),
@@ -58,9 +60,18 @@ class _UserProfileState extends State<UserProfile> {
           ),
           // Bouton pour changer le mot de passe
           ElevatedButton(
-            onPressed: _changePassword,
-            child: const Text("Changer le mot de passe"),
+            child: const Text("Modifier profil"),
+            onPressed: () => {
+              alertProvider.showEditProfileDialog(context)
+            }
           ),
+          ElevatedButton(
+            child: const Text("Changer le mot de passe"),
+            onPressed: () => {
+               alertProvider.showChangePasswordAlert(context)
+            }
+          ),
+
         ],
       ),
     );

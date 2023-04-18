@@ -15,7 +15,83 @@ class AdminDiscussionScreen extends StatefulWidget {
 }
 
 class _AdminDiscussionScreenState extends State<AdminDiscussionScreen> {
-  List<Message> _discussions = [    Message(      sender: 'Alice',      content: 'Bonjour tout le monde',      dateTime: DateTime(2022, 10, 10, 10, 0),    ),    Message(      sender: 'Bob',      content: 'Salut Alice',      dateTime: DateTime(2022, 10, 10, 10, 5),    ),    Message(      sender: 'Charlie',      content: 'Bonjour à tous',      dateTime: DateTime(2022, 10, 10, 10, 10),    ),  ];
+  List<Message> _discussions = [    
+      Message(
+          sender: 'Alice',
+          content: 'Bonjour tout le monde',
+          dateTime: DateTime(2022, 10, 10, 10, 0), 
+        ),
+        Message(
+          sender: 'Bob',
+          content: 'Salut Alice',
+          dateTime: DateTime(2022, 10, 10, 10, 5), 
+        ),
+        Message(
+          sender: 'Charlie',
+          content: 'Bonjour à tous',
+          dateTime: DateTime(2022, 10, 10, 10, 10),    
+        ),  
+      Message(
+          sender: 'Alice',
+          content: 'Bonjour tout le monde',
+          dateTime: DateTime(2022, 10, 10, 10, 0), 
+        ),
+        Message(
+          sender: 'Bob',
+          content: 'Salut Alice',
+          dateTime: DateTime(2022, 10, 10, 10, 5), 
+        ),
+        Message(
+          sender: 'Charlie',
+          content: 'Bonjour à tous',
+          dateTime: DateTime(2022, 10, 10, 10, 10),    
+        ),  
+      Message(
+          sender: 'Alice',
+          content: 'Bonjour tout le monde',
+          dateTime: DateTime(2022, 10, 10, 10, 0), 
+        ),
+        Message(
+          sender: 'Bob',
+          content: 'Salut Alice',
+          dateTime: DateTime(2022, 10, 10, 10, 5), 
+        ),
+        Message(
+          sender: 'Charlie',
+          content: 'Bonjour à tous',
+          dateTime: DateTime(2022, 10, 10, 10, 10),    
+        ),  
+      Message(
+          sender: 'Alice',
+          content: 'Bonjour tout le monde',
+          dateTime: DateTime(2022, 10, 10, 10, 0), 
+        ),
+        Message(
+          sender: 'Bob',
+          content: 'Salut Alice',
+          dateTime: DateTime(2022, 10, 10, 10, 5), 
+        ),
+        Message(
+          sender: 'Charlie',
+          content: 'Bonjour à tous',
+          dateTime: DateTime(2022, 10, 10, 10, 10),    
+        ),  
+      Message(
+          sender: 'Alice',
+          content: 'Bonjour tout le monde',
+          dateTime: DateTime(2022, 10, 10, 10, 0), 
+        ),
+        Message(
+          sender: 'Bob',
+          content: 'Salut Alice',
+          dateTime: DateTime(2022, 10, 10, 10, 5), 
+        ),
+        Message(
+          sender: 'Charlie',
+          content: 'Bonjour à tous',
+          dateTime: DateTime(2022, 10, 10, 10, 10),    
+        ),
+  ];
 
   final TextEditingController _textEditingController = TextEditingController();
 
@@ -23,7 +99,7 @@ class _AdminDiscussionScreenState extends State<AdminDiscussionScreen> {
   Widget build(BuildContext context) {
     _discussions.sort((a, b) => b.dateTime.compareTo(a.dateTime));
     return Scaffold(
-      drawer: AddDrower(),
+      // drawer: AddDrower(),
       appBar: AppBar(
         title: Text('Ecrire à l\'administration en cas de problème'),
       ),

@@ -6,6 +6,9 @@ class AlertProvider extends ChangeNotifier {
   List<Function> _callbacks = [];
 
   // Fonction pour ajouter une alerte à la liste des alertes.
+  void remove() {
+    _items.clear();
+  }  
   void addItem(String item, Function callback) {
     _items.add(item);
     _callbacks.add(callback);
@@ -13,29 +16,31 @@ class AlertProvider extends ChangeNotifier {
   }
 
   // Fonction pour afficher une boîte de dialogue d'alerte avec les éléments de la liste et les fonctions de rappel.
-  void showAlertListToSelect(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Alerte'),
-          content: Column(
+void showAlertListToSelect(BuildContext context, String title) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(title),
+        content: SingleChildScrollView(
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             children: List.generate(
               _items.length,
               (index) => ListTile(
                 title: Text(_items[index]),
                 onTap: () {
-                  _callbacks[index]();
                   Navigator.pop(context);
+                  _callbacks[index]();
                 },
               ),
             ),
           ),
-        );
-      },
-    );
-  }
+        ),
+      );
+    },
+  );
+}
 
   // Variables d'instance pour stocker les alertes.
   List<String> _alerts = [];
@@ -47,12 +52,12 @@ class AlertProvider extends ChangeNotifier {
   }
 
   // Fonction pour afficher une boîte de dialogue d'alerte avec le message spécifié.
-  void showAlert(BuildContext context, String message) {
+  void showAlert(BuildContext context, String title, String message) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Alerte'),
+          title: Text(title),
           content: Text(message),
           actions: <Widget>[
             TextButton(
@@ -69,10 +74,13 @@ class AlertProvider extends ChangeNotifier {
 
   
   // Fonction pour afficher une boîte de dialogue d'alerte pour modifier le mot de passe.
-  void showChangePasswordAlert(BuildContext context) {
+void showChangePasswordAlert(BuildContext context) {
     String currentPassword = '';
     String newPassword = '';
     String confirmPassword = '';
+    bool showCurrentPassword = false;
+    bool showNewPassword = false;
+    bool showConfirmPassword = false;
 
     showDialog(
       context: context,
@@ -89,23 +97,35 @@ class AlertProvider extends ChangeNotifier {
                     decoration: InputDecoration(
                       hintText: 'Mot de passe courant',
                     ),
-                    obscureText: true,
+                    obscureText: !showCurrentPassword,
                   ),
                   SizedBox(height: 10),
                   TextField(
                     onChanged: (value) => newPassword = value,
                     decoration: InputDecoration(
                       hintText: 'Nouveau mot de passe',
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          showNewPassword ? Icons.visibility_off : Icons.visibility,
+                        ),
+                        onPressed: () => setState(() => showNewPassword = !showNewPassword),
+                      ),
                     ),
-                    obscureText: true,
+                    obscureText: !showNewPassword,
                   ),
                   SizedBox(height: 10),
                   TextField(
                     onChanged: (value) => confirmPassword = value,
                     decoration: InputDecoration(
                       hintText: 'Confirmer le nouveau mot de passe',
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          showConfirmPassword ? Icons.visibility_off : Icons.visibility,
+                        ),
+                        onPressed: () => setState(() => showConfirmPassword = !showConfirmPassword),
+                      ),
                     ),
-                    obscureText: true,
+                    obscureText: !showConfirmPassword,
                   ),
                 ],
               ),
@@ -120,11 +140,13 @@ class AlertProvider extends ChangeNotifier {
                   child: Text('Enregistrer'),
                   onPressed: () {
                     if (currentPassword == '') {
-                      showAlert(context, 'Veuillez saisir votre mot de passe courant.');
+                      showAlert(context,'Modifier mot de passe', 'Veuillez saisir votre mot de passe courant.');
                     } else if (newPassword == '') {
-                      showAlert(context, 'Veuillez saisir votre nouveau mot de passe.');
+                      showAlert(context,'Modifier mot de passe', 'Veuillez saisir votre nouveau mot de passe.');
+                    } else if (newPassword.length < 4 || confirmPassword.length < 4) {
+                      showAlert(context,'Modifier mot de passe', 'Les mots de passe doivent contenir au moins 4 caractères.');
                     } else if (newPassword != confirmPassword) {
-                      showAlert(context, 'Les mots de passe ne correspondent pas.');
+                      showAlert(context,'Modifier mot de passe', 'Les mots de passe ne correspondent pas.');
                     } else {
                       // Enregistrer le nouveau mot de passe ici
                       // ...
@@ -139,7 +161,6 @@ class AlertProvider extends ChangeNotifier {
       },
     );
   }
-
 
 
   String _username = "John Doe";

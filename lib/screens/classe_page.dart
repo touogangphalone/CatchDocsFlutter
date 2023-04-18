@@ -1,5 +1,24 @@
-import 'package:flutter/material.dart';
+import 'package:quizstar/provider/alert_provider.dart';
 import 'package:quizstar/screens/style/theme.dart';
+import 'package:flutter/material.dart';
+import 'package:quizstar/model/classes.dart';
+import 'package:quizstar/screens/HomeMain.dart';
+import 'package:quizstar/screens/admin_discution.dart';
+import 'package:quizstar/screens/apropos.dart';
+import 'package:quizstar/screens/classe_page.dart';
+import 'package:quizstar/screens/concours_page.dart';
+import 'package:quizstar/screens/contact_us.dart';
+import 'package:quizstar/screens/cour.dart';
+import 'package:quizstar/screens/forum.dart';
+import 'package:quizstar/screens/login_screens.dart';
+import 'package:quizstar/screens/otp_forgot_pasword.dart';
+import 'package:quizstar/screens/otp_screens.dart';
+import 'package:quizstar/screens/phone_number.dart';
+import 'package:quizstar/screens/register_screens.dart';
+import 'package:quizstar/screens/reset_password.dart';
+import 'package:quizstar/screens/user_profile.dart';
+import 'package:quizstar/screens/quiz_screen.dart';
+import 'package:quizstar/splash.dart';
 
 class HomeClasseScreens extends StatefulWidget {
   static const routeName = '/classe-screens';
@@ -10,6 +29,7 @@ class HomeClasseScreens extends StatefulWidget {
 
 class _HomeClasseScreensState extends State<HomeClasseScreens> {
 
+    final AlertProvider alertProvider = AlertProvider();
   // Définir une liste de classes par niveau d'enseignement
   Map<String, List<String>> classes = {
     'Classes intermmediaire': ['6ème', '5ème', '4ème', '2nde A',],
@@ -18,6 +38,10 @@ class _HomeClasseScreensState extends State<HomeClasseScreens> {
 
    @override
   Widget build(BuildContext context) {
+    alertProvider.addItem('Forfait jour', () => Navigator.pushNamed(context, '/cour'));
+    alertProvider.addItem('Forfait mois', () => Navigator.pushNamed(context, '/cour'));
+    alertProvider.addItem('Forfait annuel', () => Navigator.pushNamed(context, '/cour'));
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -47,9 +71,16 @@ class _HomeClasseScreensState extends State<HomeClasseScreens> {
                       String levelClass = levelClasses[index];
                       return GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, '/classe/cour');
-                          // Action à exécuter lorsque l'élément de la liste est cliqué
-                          print('Element de la liste cliqué: $levelClass');
+
+                          // alertProvider.showChangePasswordAlert(context);
+
+                          alertProvider.showAlertListToSelect(context, "Liste des forfaits");
+                          // alertProvider.remove();
+                          // alertProvider.showAlert(context, 'Titre de l\'alerte', 'Message de l\'alerte');
+
+                          // alertProvider.showEditProfileDialog(context);
+          
+                          // Navigator.pushNamed(context, '/classe/cour');
                         },
                         child: Card(
                           margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),

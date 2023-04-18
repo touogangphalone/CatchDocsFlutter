@@ -43,7 +43,7 @@ class AddDrower extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Navigator.pop(context); // Fermer le menu
+                Navigator.pop(context); 
                   Navigator.pushNamed(context, '/home');
               },
               child: ListTile(
@@ -56,7 +56,7 @@ class AddDrower extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Navigator.pop(context); // Fermer le menu
+                Navigator.pop(context); 
                   Navigator.pushNamed(context, '/profile');
               
                 /*Navigator.of(context)
@@ -73,19 +73,29 @@ class AddDrower extends StatelessWidget {
             Divider(
               height: 12,
             ),
+            // InkWell(
+            //   onTap: () {
+            //     Navigator.pop(context); 
+            //       Navigator.pushNamed(context, '/concour');
+            //   },
+            //   child: ListTile(
+            //     title: Text('Concours'),
+            //     leading: Icon(Icons.work_sharp, color: Colors.lightBlue),
+            //   ),
+            // ),
+            // InkWell(
+            //   onTap: () {
+            //     Navigator.pop(context); 
+            //       Navigator.pushNamed(context, '/quiz');
+            //   },
+            //   child: ListTile(
+            //     title: Text('Quiz'),
+            //     leading: Icon(Icons.forum, color: Colors.lightBlue),
+            //   ),
+            // ),
             InkWell(
               onTap: () {
-                Navigator.pop(context); // Fermer le menu
-                  Navigator.pushNamed(context, '/concour');
-              },
-              child: ListTile(
-                title: Text('Concours'),
-                leading: Icon(Icons.work_sharp, color: Colors.lightBlue),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context); // Fermer le menu
+                Navigator.pop(context); 
                   Navigator.pushNamed(context, '/forum');
               },
               child: ListTile(
@@ -95,7 +105,7 @@ class AddDrower extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Navigator.pop(context); // Fermer le menu
+                Navigator.pop(context); 
                   Navigator.pushNamed(context, '/admin');
               },
               child: ListTile(
@@ -108,7 +118,7 @@ class AddDrower extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Navigator.pop(context); // Fermer le menu
+                Navigator.pop(context); 
                 Navigator.pushNamed(context, '/contactez');
               },
               child: ListTile(
@@ -118,7 +128,7 @@ class AddDrower extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Navigator.pop(context); // Fermer le menu
+                Navigator.pop(context); 
                 Navigator.pushNamed(context, '/apropos');
               },
               child: ListTile(

@@ -23,7 +23,7 @@ class _ForumDiscussionScreenState extends State<ForumDiscussionScreen> {
   Widget build(BuildContext context) {
     _discussions.sort((a, b) => b.dateTime.compareTo(a.dateTime));
     return Scaffold(
-      drawer: AddDrower(),
+      // drawer: AddDrower(),
       appBar: AppBar(
         title: Text('Discussions de forum'),
       ),

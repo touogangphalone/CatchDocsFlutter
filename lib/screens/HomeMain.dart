@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:quizstar/screens/classe_page.dart';
+import 'package:quizstar/screens/concours_page.dart';
 import 'package:quizstar/screens/cour.dart';
 import 'package:quizstar/screens/resultat_concour.dart';
 import 'package:quizstar/screens/style/theme.dart';
@@ -35,7 +36,7 @@ class _HomeMainState extends State<HomeMain> {
   bool _showAppNavBar = true;
   bool _showHome = true;
   bool _showClasse = false;
-  bool _showResult = false;
+  bool _showConcour = false;
   bool _showChat = false;
   bool _showForum = false;
   bool _showNotification = false;
@@ -138,50 +139,24 @@ class _HomeMainState extends State<HomeMain> {
                           });
                         },
                         child: SingleNavBarButton(
-                          name: "home",
+                          name: "Classes",
                           icon: FontAwesomeIcons.home,
                           selectedButton: _currentNavIndex == 0 ? true : false,
                         )),
                     InkWell(
                         onTap: () {
                           setState(() {
-                            _showResults();
+                            _showConcours();
                             _currentNavIndex = 1;
                           });
                           /*Navigator.of(context)
                               .pushReplacementNamed(UserScreens.routeName);*/
                         },
                         child: SingleNavBarButton(
-                          name: "Result",
+                          name: "Concour(s)",
                           icon: FontAwesomeIcons.book,
                           selectedButton: _currentNavIndex == 1 ? true : false,
                         )),
-                    // InkWell(
-                    //     onTap: () {
-                    //       setState(() {
-                    //         _showChats();
-                    //         _currentNavIndex = 2;
-                    //       });
-                    //       /*Navigator.of(context)
-                    //             .pushReplacementNamed(AddPostScreen.routeName);*/
-                    //     },
-                    //     child: SingleNavBarButton(
-                    //       name: "Chat",
-                    //       icon: FontAwesomeIcons.message,
-                    //       selectedButton: _currentNavIndex == 2 ? true : false,
-                    //     )),
-                    // InkWell(
-                    //     onTap: () {
-                    //       _showForums();
-                    //       setState(() {
-                    //         _currentNavIndex = 3;
-                    //       });
-                    //     },
-                    //     child: SingleNavBarButton(
-                    //       name: "Forum",
-                    //       icon: FontAwesomeIcons.forumbee,
-                    //       selectedButton: _currentNavIndex == 3 ? true : false,
-                    //     )),
                     InkWell(
                         onTap: () {
                           setState(() {
@@ -190,7 +165,7 @@ class _HomeMainState extends State<HomeMain> {
                           });
                         },
                         child: SingleNavBarButton(
-                          name: "Notification",
+                          name: "Notifications",
                           icon: FontAwesomeIcons.solidBell,
                           selectedButton: _currentNavIndex == 4 ? true : false,
                         )),
@@ -260,10 +235,11 @@ class _HomeMainState extends State<HomeMain> {
         ),
         body: Column(
           children: [
-            Expanded(child: _showHome ? CourScreens() : 
+            Expanded(child: 
+            _showHome ? HomeClasseScreens() : 
             _showForum ? ChangePasswordPage(): 
             _showChat ? AdminDiscussionScreen(): 
-            _showResult ? ResultatConcourScreen(): 
+            _showConcour ? ConcoursPage(): 
             _showClasse ? HomeClasseScreens(): 
             _showNotification ? NotificationScreen() : null ,
                 ),
@@ -289,7 +265,7 @@ class _HomeMainState extends State<HomeMain> {
     setState(() {
       _showClasse = true;
       _showHome = false;
-      _showResult = false;
+      _showConcour = false;
       _showChat = false;
       _showForum = false;
       _showNotification = false;
@@ -301,16 +277,16 @@ class _HomeMainState extends State<HomeMain> {
     setState(() {
       _showHome = true;
       _showClasse = false;
-      _showResult = false;
+      _showConcour = false;
       _showChat = false;
       _showForum = false;
       _showNotification = false;
     });
   }
 
-  void _showResults() {
+  void _showConcours() {
     setState(() {
-      _showResult = true;
+      _showConcour = true;
       _showHome = false;
       _showClasse = false;
       _showChat = false;
@@ -322,7 +298,7 @@ class _HomeMainState extends State<HomeMain> {
   void _showChats() {
     setState(() {
       _showChat = true;
-      _showResult = false;
+      _showConcour = false;
       _showHome = false;
       _showClasse = false;
       _showForum = false;
@@ -334,7 +310,7 @@ class _HomeMainState extends State<HomeMain> {
     setState(() {
       _showForum = true;
       _showChat = false;
-      _showResult = false;
+      _showConcour = false;
       _showHome = false;
       _showClasse = false;
       _showNotification = false;
@@ -346,7 +322,7 @@ class _HomeMainState extends State<HomeMain> {
       _showNotification = true;
       _showForum = false;
       _showChat = false;
-      _showResult = false;
+      _showConcour = false;
       _showHome = false;
       _showClasse = false;
     });

@@ -46,10 +46,10 @@ class ConcoursPage extends StatelessWidget {
 @override
 Widget build(BuildContext context) {
   return Scaffold(
-    drawer: AddDrower(),
-    appBar: AppBar(
-      title: Text('Liste des concours'),
-    ),
+    // drawer: AddDrower(),
+    // appBar: AppBar(
+    //   title: Text('Liste des concours'),
+    // ),
     body: ListView.builder(
       itemCount: concours.length,
       itemBuilder: (context, index) {

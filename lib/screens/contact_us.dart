@@ -5,7 +5,7 @@ class ContactPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: AddDrower(),
+      // drawer: AddDrower(),
       appBar: AppBar(
         title: Text('Contact Us'),
       ),
