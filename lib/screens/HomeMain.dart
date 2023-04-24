@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:quizstar/l10n/en/app_localizations_en.dart';
 import 'package:quizstar/screens/classe_page.dart';
 import 'package:quizstar/screens/concours_page.dart';
 import 'package:quizstar/screens/cour.dart';
@@ -177,7 +178,8 @@ class _HomeMainState extends State<HomeMain> {
               ),
         drawer: AddDrower(),
         appBar: AppBar(
-          title: Text("CamSchool"),
+          // title: Text(AppLocalizations.of(context).helloWorld),
+          title: Text("helloWorld"),
           centerTitle: true,
           backgroundColor: blueColor,
           actions: <Widget>[

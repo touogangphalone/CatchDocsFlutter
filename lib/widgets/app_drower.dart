@@ -139,7 +139,8 @@ class AddDrower extends StatelessWidget {
             Spacer(),
             ListTile(
               onTap: () {
-                Navigator.pop(context);
+                Navigator.pop(context); 
+                Navigator.pushNamed(context, '/login');
                 _logoutnow();
               },
               trailing: Icon(

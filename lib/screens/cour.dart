@@ -127,7 +127,7 @@ class _CourScreensState extends State<CourScreens> {
               final cours = _cours[index];
               return InkWell(
                 onTap: () {
-                  // Navigator.pushNamed(context, '/classe/cour');
+                  Navigator.pushNamed(context, '/chapitre');
                 },
                 child: Container(
                   decoration: BoxDecoration(

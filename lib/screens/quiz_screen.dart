@@ -72,6 +72,7 @@
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
+                  Navigator.pushNamed(context, "/chapitre");
                 },
                 child: Text('Fermer'),
               ),
@@ -129,60 +130,4 @@ Widget build(BuildContext context) {
     ),
   );
 }
-
-
-// @override
-// Widget build(BuildContext context) {
-//   return Scaffold(
-//     appBar: AppBar(
-//       title: Text('Quiz'),
-//     ),
-//     body: SingleChildScrollView(
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.stretch,
-//         children: [
-//           Padding(
-//             padding: EdgeInsets.all(16.0),
-//             child: Text(
-//               quizData[_currentIndex]['question'],
-//               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-//             ),
-//           ),
-//           ...quizData[_currentIndex]['answers']
-//               .asMap()
-//               .entries
-//               .map(
-//                 (entry) => RadioListTile<int>(
-//                   title: Text(entry.value['text']),
-//                   value: entry.key,
-//                   groupValue: _selectedAnswers[_currentIndex],
-//                   onChanged: (int? value) {
-//                     _selectAnswer(_currentIndex, value ?? -1);
-//                   },
-//                 ),
-//               )
-//               .toList(),
-//           Padding(
-//             padding: EdgeInsets.all(16.0),
-//             child: ElevatedButton(
-//               onPressed: _currentIndex == quizData.length - 1
-//                   ? _submitQuiz
-//                   : () {
-//                       setState(() {
-//                         _currentIndex++;
-//                       });
-//                     },
-//               child: Text(
-//                 _currentIndex == quizData.length - 1 ? 'Terminer' : 'Suivant',
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     ),
-//   );
-// }
-
 }
-
-  // tu n'as toujours pas finis le code

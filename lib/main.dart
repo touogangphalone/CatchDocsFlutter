@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:quizstar/l10n/en/app_localizations_en.dart';
+import 'package:quizstar/l10n/fr/app_localizations_fr.dart';
 import 'package:quizstar/model/classes.dart';
 import 'package:quizstar/screens/HomeMain.dart';
 import 'package:quizstar/screens/admin_discution.dart';
 import 'package:quizstar/screens/apropos.dart';
+import 'package:quizstar/screens/chapitre.dart';
+import 'package:quizstar/screens/chapitres.dart';
 import 'package:quizstar/screens/classe_page.dart';
 import 'package:quizstar/screens/concours_page.dart';
 import 'package:quizstar/screens/contact_us.dart';
@@ -18,6 +22,10 @@ import 'package:quizstar/screens/user_profile.dart';
 import 'package:quizstar/screens/quiz_screen.dart';
 import 'package:quizstar/splash.dart';
 
+import 'package:flutter_localizations/flutter_localizations.dart';
+// import 'package:quizstar/l10n/app_localizations_en.dart';
+// import 'package:quizstar/l10n/app_localizations_fr.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -31,6 +39,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/classe': (context) => HomeClasseScreens(),
         '/cour': (context) => CourScreens(),
+        '/chapitre': (context) => ChapterList(),
+        '/chapitre_detail': (context) => CourseDetailsPage(),
         '/quiz': (context) => QuizScreen(),
         '/login': (context) => LoginScreens(),
         '/home': (context) => HomeMain(),
@@ -64,6 +74,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
+      supportedLocales: [
+        Locale('en', 'US'),
+        Locale('fr', 'FR'),
+      ],
+      localizationsDelegates: [
+        const AppLocalizationsDelegate(),
+        const AppLocalizationsDelegatefr(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
     );
   }
 }
