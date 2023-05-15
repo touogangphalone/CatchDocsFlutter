@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:quizstar/screens/style/theme.dart';
 import 'dart:async';
 import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreens extends StatefulWidget {
   static const routeName = '/login-screens';
@@ -13,9 +17,11 @@ class LoginScreens extends StatefulWidget {
 
 class _LoginScreensState extends State<LoginScreens> {
   final _form = GlobalKey<FormState>();
-  //String _username;
-  //String _password;
+  String _username;
+  String _password;
   bool _obscureText = true;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   void _loginNow() async {
     Navigator.pushNamed(context, '/home');
@@ -24,164 +30,260 @@ class _LoginScreensState extends State<LoginScreens> {
       return;
     }
     _form.currentState.save();
-    // bool islogin = await Provider.of<PostsState>(context, listen: false)
-    //     .loginNow(_username, _password);
-    // print(_username);
-    // print(_password);
-    // if (!islogin) {
-    //   Navigator.of(context).pushReplacementNamed(HomeScreens.routName);
-    // } else {
-    //   showDialog(
-    //     context: context,
-    //     builder: (context) {
-    //       return AlertDialog(
-    //         title: Text("Somthing is Wrong!Try Again"),
-    //         actions: [
-    //           RaisedButton(
-    //             onPressed: () {
-    //               Navigator.of(context).pop();
-    //             },
-    //             child: Text("Ok"),
-    //           ),
-    //         ],
-    //       );
-    //     },
-    //   );
-    // }
   }
 
+
+  Future<void> login(BuildContext context) async {
+    final String apiUrl = "http://127.0.0.1:8000/login";
+    var response = await http.post(Uri.parse(apiUrl), body: {
+      "email": emailController.text,
+      "password": passwordController.text
+    });
+
+    if (response.statusCode == 200) {
+      var body = jsonDecode(response.body);
+      SharedPreferences localStorage =
+          await SharedPreferences.getInstance();
+      localStorage.setString('user', json.encode(body));
+      Navigator.pushNamed(context, '/home');
+    } else if (response.statusCode == 401) {
+      var body = jsonDecode(response.body);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(body['message']),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } else if (response.statusCode == 409) {
+      var body = jsonDecode(response.body);
+      String message = '';
+      for (var item in body) {
+        message += item + '\n';
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Une erreur s'est produite!"),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+
   @override
-Widget build(BuildContext context) {
-  Size size = MediaQuery.of(context).size;
-  return Scaffold(
-    appBar: AppBar(
-      title: Text(
-        "Camschool",
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "CatchDocs",
+        ),
+        centerTitle: true,
+        backgroundColor: blueColor,
       ),
-      centerTitle: true,
-      backgroundColor: blueColor,
-    ),
-    body: SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Form(
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          key: _form,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Form(
           child: Column(
-            children: [
-              SizedBox(height: size.height * 0.03),
-              SvgPicture.asset(
-                "assets/icons/login.svg",
-                height: size.height * 0.35,
-              ),
-              Text(
-                "Login",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: size.height * 0.03),
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+                SizedBox(height: size.height * 0.03),
+                SvgPicture.asset(
+                  "assets/icons/login.jpeg",
+                  height: size.height * 0.35,
+                ),
+                Text(
+                  "Login",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: size.height * 0.03),
               TextFormField(
-                validator: (v) {
-                  if (v.isEmpty) {
-                    return 'Enter your Phone Number';
-                  } else if (v.length != 9 || !v.startsWith('6')) {
-                    return 'Enter a valid Phone Number';
+                controller: emailController,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  labelText: "Adresse e-mail",
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Veuillez entrer votre adresse e-mail";
                   }
                   return null;
                 },
-                decoration: InputDecoration(
-                  icon: Icon(
-                    Icons.person,
-                    color: blueColor,
-                  ),
-                  labelText: "Phone Number",
-                ),
-                cursorColor: blueColor,
-                onFieldSubmitted: (_) {
-                  // Validation automatique lorsque l'utilisateur passe au champ suivant
-                  _form.currentState.validate();
-                },
               ),
+              SizedBox(height: 10),
               TextFormField(
-                cursorColor: blueColor,
-                obscureText: _obscureText,
-                validator: (v) {
-                  if (v.isEmpty) {
-                    return 'Enter your Password';
-                  } else if (v.length < 4) {
-                    return 'Password must be at least 4 characters';
+                controller: passwordController,
+                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: "Mot de passe",
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Veuillez entrer votre mot de passe";
                   }
                   return null;
                 },
-                decoration: InputDecoration(
-                  icon: Icon(
-                    Icons.lock,
-                    color: blueColor,
-                  ),
-                  labelText: "Password",
-                  suffixIcon: IconButton(
-                  icon: Icon(
-                    _obscureText ? Icons.visibility : Icons.visibility_off,
-                    color: blueColor,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _obscureText = !_obscureText;
-                    });
-                  },
-                ),
-                ),
-                // obscureText: true,
-                onFieldSubmitted: (_) {
-                  // Validation automatique lorsque l'utilisateur appuie sur la touche "Terminé"
-                  _form.currentState.validate();
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                    login(context);
                 },
+                child: Text("Connexion"),
               ),
-              SizedBox(height: size.height * 0.03),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  RaisedButton(
-                    color: blueColor,
-                    onPressed: () {
-                      if (_form.currentState.validate()) {
-                        _loginNow();
-                        print("pressed");
-                      }
-                    },
-                    child: Text("Login"),
-                  ),
-                  SizedBox(width: size.height * 0.03),
-                  FlatButton(
-                    onPressed: () {
-                      /*Navigator.of(context)
-                          .pushReplacementNamed(RegisterScreens.routeName);*/
-                      Navigator.pushNamed(context, '/resgister');
-                      print("bonjour");
-                    },
-                    child: Text("Register Now"),
-                  ),
-                ],
-              ),
-              SizedBox(height: size.height * 0.03),
-              SizedBox(height: size.height * 0.03),
-          GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, '/phonenumber');
-              },
-              child: Text(
-                "mot de passe oublié?",
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color.fromARGB(255, 85, 153, 209),
-                ),
-              ),
-            ),
             ],
           ),
         ),
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
+ }
 
-}
+// import 'dart:convert';
+
+// import 'package:flutter/cupertino.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_svg/svg.dart';
+// import 'package:scan_doc/screens/style/theme.dart';
+
+// class LoginScreens extends StatefulWidget {
+//   static const routeName = '/login-screens';
+//   _LoginScreensState createState() => _LoginScreensState();
+// }
+
+// class _LoginScreensState extends State<LoginScreens> {
+//   final _form = GlobalKey<FormState>();
+//   final _formKey = GlobalKey<FormState>();
+//   TextEditingController emailController = TextEditingController();
+//   TextEditingController passwordController = TextEditingController();
+
+
+//   Future<void> login(BuildContext context) async {
+//     final String apiUrl = "http://127.0.0.1:8000/login";
+//     var response = await http.post(Uri.parse(apiUrl), body: {
+//       "email": emailController.text,
+//       "password": passwordController.text
+//     });
+
+//     if (response.statusCode == 200) {
+//       var body = jsonDecode(response.body);
+//       SharedPreferences localStorage =
+//           await SharedPreferences.getInstance();
+//       localStorage.setString('user', json.encode(body));
+//       Navigator.pushNamed(context, '/home');
+//     } else if (response.statusCode == 401) {
+//       var body = jsonDecode(response.body);
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(
+//           content: Text(body['message']),
+//           backgroundColor: Colors.red,
+//         ),
+//       );
+//     } else if (response.statusCode == 409) {
+//       var body = jsonDecode(response.body);
+//       String message = '';
+//       for (var item in body) {
+//         message += item + '\n';
+//       }
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(
+//           content: Text(message),
+//           backgroundColor: Colors.red,
+//         ),
+//       );
+//     } else {
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(
+//           content: Text("Une erreur s'est produite!"),
+//           backgroundColor: Colors.red,
+//         ),
+//       );
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     Size size = MediaQuery.of(context).size;
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text(
+//           "CatchDocs",
+//         ),
+//         centerTitle: true,
+//         backgroundColor: blueColor,
+//       ),
+//       body: SingleChildScrollView(
+//         child: Padding(
+//           padding: const EdgeInsets.all(8.0),
+//           child: Form(
+//           key: _formKey,
+//           child: Column(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: <Widget>[
+//                 SizedBox(height: size.height * 0.03),
+//                 SvgPicture.asset(
+//                   "assets/icons/login.jpeg",
+//                   height: size.height * 0.35,
+//                 ),
+//                 Text(
+//                   "Login",
+//                   style: TextStyle(fontWeight: FontWeight.bold),
+//                 ),
+//                 SizedBox(height: size.height * 0.03),
+//               TextFormField(
+//                 controller: emailController,
+//                 keyboardType: TextInputType.emailAddress,
+//                 decoration: InputDecoration(
+//                   labelText: "Adresse e-mail",
+//                   border: OutlineInputBorder(),
+//                 ),
+//                 validator: (value) {
+//                   if (value == null || value.isEmpty) {
+//                     return "Veuillez entrer votre adresse e-mail";
+//                   }
+//                   return null;
+//                 },
+//               ),
+//               SizedBox(height: 10),
+//               TextFormField(
+//                 controller: passwordController,
+//                 obscureText: true,
+//                 decoration: InputDecoration(
+//                   labelText: "Mot de passe",
+//                   border: OutlineInputBorder(),
+//                 ),
+//                 validator: (value) {
+//                   if (value == null || value.isEmpty) {
+//                     return "Veuillez entrer votre mot de passe";
+//                   }
+//                   return null;
+//                 },
+//               ),
+//               SizedBox(height: 20),
+//               ElevatedButton(
+//                 onPressed: () {
+//                   if (_formKey.currentState!.validate()) {
+//                     login(context);
+//                   }
+//                 },
+//                 child: Text("Connexion"),
+//               ),
+//             ],
+//           ),
+//         ),
+//         ),
+//       ),
+//     );
+//   }
+// }
