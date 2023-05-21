@@ -27,8 +27,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      // home: LoginPage(),
-      home: UploadFie(),
+      home: LoginPage(),
+      routes: {
+        '/login': (context) => LoginPage(),
+        '/home': (context) => UploadFie()
+        // Ajoutez des routes pour vos autres pages ici
+      },
     );
   }
 }
