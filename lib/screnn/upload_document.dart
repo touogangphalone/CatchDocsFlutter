@@ -23,7 +23,7 @@ class _UploadFieState extends State<UploadFie> {
   final _textController = TextEditingController();
   final _tagsController = TextEditingController();
   final _annotationsController = TextEditingController();
-  late File _image ;
+  late File _image = File('') ;
 
   Future<void> _getImage() async {
     final picker = ImagePicker();
@@ -61,7 +61,7 @@ class _UploadFieState extends State<UploadFie> {
   String? User = prefs.getString('user');
   final String officeId = User != null ? jsonDecode(User)["office_id"] : 1;
 
-    final url = Uri.parse('http://127.0.0.1:8000/upload_file');
+    final url = Uri.parse('http://192.168.100.19:8000/upload_file');
     final request = http.MultipartRequest('POST', url);
     request.files.add(await http.MultipartFile.fromPath('documents', file.path));
     request.fields['name'] = _nameController.text;
@@ -85,7 +85,7 @@ class _UploadFieState extends State<UploadFie> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Mon formulaire'),
+        title: Text('Ajouter un nouveau document'),
       ),
       body: SingleChildScrollView(
         child: Padding(

@@ -14,7 +14,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> login(BuildContext context) async {
 
-    final String apiUrl = "http://127.0.0.1:8000/login";
+    final String apiUrl = "http://192.168.100.19:8000/login";
     var response = await http.post(Uri.parse(apiUrl), body: {
       "email": emailController.text,
       "password": passwordController.text
