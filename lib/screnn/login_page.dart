@@ -12,22 +12,26 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  Future<void> login(BuildContext context) async {
-
-    final String apiUrl = "http://192.168.100.19:8000/login";
+  Future<void> login(BuildContext context, String email, String pass) async {
+    print("email = $email");
+    print("pass = $pass");
+    final String apiUrl = "http://192.168.248.227:8000/api/login";
     var response = await http.post(Uri.parse(apiUrl), body: {
-      "email": emailController.text,
-      "password": passwordController.text
+      "email": email,
+      "password": pass,
     });
-
+    print(" STATUS CODE DATA :${response.statusCode}");
     if (response.statusCode == 200) {
       var body = jsonDecode(response.body);
-      SharedPreferences localStorage =
-          await SharedPreferences.getInstance();
+
+      print("${body}");
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('user', json.encode(body));
       Navigator.pushNamed(context, '/home'); //------
     } else if (response.statusCode == 401) {
       var body = jsonDecode(response.body);
+      print(body);
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(body['message']),
@@ -36,6 +40,7 @@ class _LoginPageState extends State<LoginPage> {
       );
     } else if (response.statusCode == 409) {
       var body = jsonDecode(response.body);
+      print(body);
       String message = '';
       for (var item in body) {
         message += item + '\n';
@@ -60,7 +65,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Connexion'),
+        centerTitle: true,
+        title: Text('Bienvenue Sur CatchDocs'),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -71,19 +77,39 @@ class _LoginPageState extends State<LoginPage> {
               controller: emailController,
               decoration: InputDecoration(
                 labelText: 'Adresse e-mail',
+                icon: Icon(
+                  Icons.email_outlined,
+                  color: Colors.blue,
+                ),
               ),
             ),
             TextField(
               controller: passwordController,
               obscureText: true,
               decoration: InputDecoration(
+                icon: Icon(
+                  Icons.lock,
+                  color: Colors.blue,
+                ),
                 labelText: 'Mot de passe',
               ),
             ),
             SizedBox(height: 24.0),
             ElevatedButton(
-              onPressed: () => login(context),
+              onPressed: () =>
+                  login(context, emailController.text, passwordController.text),
+              //Navigator.pushNamed(context, '/home'), //------
               child: Text('Se connecter'),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 90,
+                  vertical: 2,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
             ),
           ],
         ),

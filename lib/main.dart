@@ -1,6 +1,8 @@
+import 'package:Catchdocs/screnn/login_page.dart';
 import 'package:flutter/material.dart';
-import 'package:nom_du_projet/screnn/login_page.dart';
-import 'package:nom_du_projet/screnn/upload_document.dart';
+import 'package:Catchdocs/screnn/login_page.dart';
+
+import 'package:Catchdocs/screnn/upload_document.dart';
 
 void main() {
   runApp(const MyApp());

@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -8,6 +7,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UploadFie extends StatefulWidget {
   @override
@@ -15,42 +15,16 @@ class UploadFie extends StatefulWidget {
 }
 
 class _UploadFieState extends State<UploadFie> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _sourceController = TextEditingController();
-  final TextEditingController _textController = TextEditingController();
-  final TextEditingController _tagsController = TextEditingController();
-  final TextEditingController _annotationsController = TextEditingController();
-  File _image = File('');
-  List bureaux = [];
-  int selectedBureauId = 1; // Set default value to 1
-
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  void initState() {
-    super.initState();
-    fetchBureaux();
-  }
-
-  Future<void> fetchBureaux() async {
-    final url = Uri.parse('http://192.168.248.227:8000/api/admin_bureaux');
-    final response = await http.get(url);
-
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body) as Map;
-      print("/api/admin_bureaux");
-      print(data);
-      setState(() {
-        bureaux = data["bureau"];
-        print("voici le nouveau ${bureaux}");
-      });
-    } else {
-      print('Failed to fetch bureaux: ${response.statusCode}.');
-    }
-  }
+  final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
+  final _descriptionController = TextEditingController();
+  final _titleController = TextEditingController();
+  final _officesIdController = TextEditingController();
+  final _sourceController = TextEditingController();
+  final _textController = TextEditingController();
+  final _tagsController = TextEditingController();
+  final _annotationsController = TextEditingController();
+  late File _image = File('');
 
   Future<void> _getImage() async {
     final picker = ImagePicker();
@@ -64,6 +38,19 @@ class _UploadFieState extends State<UploadFie> {
       }
     });
   }
+
+//   Future<void> _getImage() async {
+//     final picker = ImagePicker();
+//     final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+//     setState(() {
+//       if (pickedFile != null) {
+//         _image = File(pickedFile.path);
+//       } else {
+//         print('No image selected.');
+//       }
+//     });
+//   }
 
   Future<void> _createPdf() async {
     final pdf = pw.Document();
@@ -86,20 +73,16 @@ class _UploadFieState extends State<UploadFie> {
   Future<void> _uploadFile(File file) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? User = prefs.getString('user');
+    final String user_id = User != null ? jsonDecode(User)["id"] : 1;
 
-    var jsonResponse = json.decode(User!) as Map;
-    String user_id = jsonResponse['user']['id'].toString();
-    print(" voici le  user new ${user_id}");
-    //final String user_id = User != null ? jsonDecode(User)["id"] : "1";
-
-    final url = Uri.parse('http://192.168.248.227:8000/api/document/store');
+    final url = Uri.parse('http:// 192.168.142.227:8000/api/document/store');
     final request = http.MultipartRequest('POST', url);
-    request.files.add(await http.MultipartFile.fromPath('document', file.path));
+    request.files
+        .add(await http.MultipartFile.fromPath('documents', file.path));
     request.fields['name'] = _nameController.text;
     request.fields['description'] = _descriptionController.text;
     request.fields['title'] = _titleController.text;
     request.fields['user_id'] = user_id;
-    request.fields['bureau_id'] = selectedBureauId.toString();
     request.fields['source'] = _sourceController.text;
     request.fields['text'] = _textController.text;
     request.fields['tags'] = _tagsController.text;
@@ -107,33 +90,28 @@ class _UploadFieState extends State<UploadFie> {
 
     final response = await request.send();
     if (response.statusCode == 200) {
-      // Show success message
-      _showSnackBar('File uploaded successfully!');
-      // Reset the form after successful submission
-      _formKey.currentState!.reset();
-      // Reset the selected image
-      setState(() {
-        _image = File('');
-      });
+      print('File uploaded!');
     } else {
-      // Show error message
-      _showSnackBar('Upload failed with status: ${response.statusCode}.');
+      print('Upload failed with status: ${response.statusCode}.');
     }
   }
 
-  void _showSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: Duration(seconds: 2),
-      ),
-    );
+  getBureaux() async {
+    var request = http.MultipartRequest(
+        'GET', Uri.parse('localhost:8000/api/admin_bureaux'));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
       appBar: AppBar(
         title: Text('Ajouter un nouveau document'),
       ),
@@ -181,23 +159,53 @@ class _UploadFieState extends State<UploadFie> {
                     return null;
                   },
                 ),
-                // ... Add other TextFormFields ...
-                // DropdownButton to display bureaux
-                Center(
-                  child: DropdownButtonFormField<String>(
-                    value: selectedBureauId.toString(),
-                    items: bureaux.map((bureau) {
-                      return DropdownMenuItem<String>(
-                        value: bureau['id'].toString(),
-                        child: Text(bureau['name']),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        selectedBureauId = int.parse(value!);
-                      });
-                    },
+                TextFormField(
+                  controller: _sourceController,
+                  decoration: InputDecoration(
+                    labelText: 'Source',
                   ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Veuillez entrer une source';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: _textController,
+                  decoration: InputDecoration(
+                    labelText: 'Texte',
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Veuillez entrer un texte';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: _tagsController,
+                  decoration: InputDecoration(
+                    labelText: 'Tags',
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Veuillez entrer des tags';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: _annotationsController,
+                  decoration: InputDecoration(
+                    labelText: 'Annotations',
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Veuillez entrer des annotations';
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(height: 16.0),
                 Center(
@@ -216,10 +224,8 @@ class _UploadFieState extends State<UploadFie> {
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        if (_image != null) {
-                          _createPdf();
-                        }
+                      if (_image != null) {
+                        _createPdf();
                       }
                     },
                     child: Text('Envoyer'),
