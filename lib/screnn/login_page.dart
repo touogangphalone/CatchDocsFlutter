@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Une erreur s'est produite!"),
+          content: Text("An error occurred!"),
           backgroundColor: Colors.red,
         ),
       );
@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Bienvenue Sur CatchDocs'),
+        title: Text('Welcome to CatchDocs'),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -76,13 +76,17 @@ class _LoginPageState extends State<LoginPage> {
             TextField(
               controller: emailController,
               decoration: InputDecoration(
-                labelText: 'Adresse e-mail',
+                labelText: 'Email Address',
                 icon: Icon(
                   Icons.email_outlined,
                   color: Colors.blue,
                 ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
               ),
             ),
+            SizedBox(height: 16.0),
             TextField(
               controller: passwordController,
               obscureText: true,
@@ -91,15 +95,17 @@ class _LoginPageState extends State<LoginPage> {
                   Icons.lock,
                   color: Colors.blue,
                 ),
-                labelText: 'Mot de passe',
+                labelText: 'Password',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
               ),
             ),
             SizedBox(height: 24.0),
             ElevatedButton(
               onPressed: () =>
                   login(context, emailController.text, passwordController.text),
-              //Navigator.pushNamed(context, '/home'), //------
-              child: Text('Se connecter'),
+              child: Text('Login'),
               style: ElevatedButton.styleFrom(
                 primary: Colors.blue,
                 padding: EdgeInsets.symmetric(

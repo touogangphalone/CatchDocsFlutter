@@ -148,7 +148,14 @@ class _UploadFieState extends State<UploadFie> {
                 TextFormField(
                   controller: _nameController,
                   decoration: InputDecoration(
+                    icon: Icon(
+                      Icons.title_rounded,
+                      color: Colors.blue,
+                    ),
                     labelText: 'Nom',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -157,10 +164,18 @@ class _UploadFieState extends State<UploadFie> {
                     return null;
                   },
                 ),
+                SizedBox(height: 7.0),
                 TextFormField(
                   controller: _descriptionController,
                   decoration: InputDecoration(
+                    icon: Icon(
+                      Icons.description,
+                      color: Colors.blue,
+                    ),
                     labelText: 'Description',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -169,10 +184,18 @@ class _UploadFieState extends State<UploadFie> {
                     return null;
                   },
                 ),
+                SizedBox(height: 7.0),
                 TextFormField(
                   controller: _titleController,
                   decoration: InputDecoration(
+                    icon: Icon(
+                      Icons.title,
+                      color: Colors.blue,
+                    ),
                     labelText: 'Titre',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -181,22 +204,44 @@ class _UploadFieState extends State<UploadFie> {
                     return null;
                   },
                 ),
+                SizedBox(height: 7.0),
                 // ... Add other TextFormFields ...
                 // DropdownButton to display bureaux
                 Center(
-                  child: DropdownButtonFormField<String>(
-                    value: selectedBureauId.toString(),
-                    items: bureaux.map((bureau) {
-                      return DropdownMenuItem<String>(
-                        value: bureau['id'].toString(),
-                        child: Text(bureau['name']),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        selectedBureauId = int.parse(value!);
-                      });
-                    },
+                  child: Container(
+                    width: 346,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.0),
+                      border: Border.all(
+                        color: Colors.grey,
+                        //width: 1.0,
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 7.0),
+                      child: DropdownButtonFormField<String>(
+                        value: selectedBureauId.toString(),
+                        items: bureaux.map((bureau) {
+                          return DropdownMenuItem<String>(
+                            value: bureau['id'].toString(),
+                            child: Text(bureau['name']),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            selectedBureauId = int.parse(value!);
+                          });
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Select Bureau',
+                          border: InputBorder.none,
+                          icon: Icon(
+                            Icons.select_all,
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(height: 16.0),
